@@ -1,128 +1,151 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <title>Blank App</title>
-    </head>
-    <body>
-		<h1>Audio Recording Test</h1>
-		<p>Talk for 3 seconds, then you will hear your recording played back</p>
-        <button id="action" onclick="handleAction()">Start recording...</button>
-        <div id="input" style="width:600px;height:250px;"></div>
-        <div id="output" style="width:600px;height:250px;"></div>
+<head>
+	<title>Cardio App</title>
+	<meta charset="utf-8">   
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+	<link rel="stylesheet" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed:600|Barlow:400,600" rel="stylesheet">
+</head>
+<body>
+	<div data-role="page" id="homePage">
+		<header data-role="header" data-position="fixed">
+			<div id="header">
+				<div class="container">
+					<h1>Cardio App - Making your routine easier and healthier</h1>
+					<a class="logo" href="#homePage">
+						<img src="imgs/logo.svg" alt="Cardio App Logo" />
+					</a>
 
-        <script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script>
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-		<script>
-            const recordAudio = () =>
-            new Promise(async resolve => {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                const mediaRecorder = new MediaRecorder(stream);
-                const audioChunks = [];
+					<a id="hambNav" href="#">
+						<img src="imgs/hamb_nav.png" alt="hambuguer navigation" />
+					</a>
+				</div>
+			</div>
+			
+			<nav id="navDrop">
+				<ul>
+					<li><a href="#homePage">Dashboard</a></li>
+					<li><a href="#homePage">History</a></li>
+					<li><a href="#homePage">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+		<!-- //header -->
+	
+		<section role="main" class="ui-content" id="dashboard"> 
+			<div class="container">
+				<p id="beat" class="beats">65</p>
+				<p class="bpm">bpm</p>
+				<a class="btn" href="#instructionsPage">Start</a>
 
-                mediaRecorder.addEventListener("dataavailable", event => {
-                audioChunks.push(event.data);
-                });
+				<div class="checkTime">
+					<p>Checked at</p>
+					<p class="time">02/10/2019
+						<span>01:30 PM</span>
+					</p>
+				</div>
+			</div>
 
-                const start = () => mediaRecorder.start();
-                var audioContext = new AudioContext();
-                const stop = () =>
-                new Promise(resolve => {
-                    mediaRecorder.addEventListener("stop", () => {
-                        const audioBlob = new Blob(audioChunks);
-                        const audioUrl = URL.createObjectURL(audioBlob);
-                        var arrayBuffer;
-                        var fileReader = new FileReader();
-                        fileReader.onload = function(event) {
-                            arrayBuffer = event.target.result;
-                            audioContext.decodeAudioData(arrayBuffer, decodedDone);
-                        };
-                        fileReader.readAsArrayBuffer(audioBlob);
-                        
-                        const audio = new Audio(audioUrl);
-                        const play = () => audio.play();
-                        resolve({ audioBlob, audioUrl, play });
-                    });
+			<div id="input" style="width:425px;height:250px;"></div>
+        	<div id="output" style="width:425px;height:250px;"></div>
+		</section>
+		<!-- //section dashboard -->
 
-                    mediaRecorder.stop();
-                });
+		<footer data-role="footer" data-position="fixed">
+			<div class="container">
+				<img src="imgs/wave_before.png" alt="waves sound before" />
+			</div>
+		</footer>
+		<!-- //footer -->
+	</div><!-- //page home -->
 
-                resolve({ start, stop });
-            });
+	<div data-role="page" id="instructionsPage">
+		<header data-role="header" data-position="fixed">
+			<div id="header">
+				<div class="container">
+					<h1>Cardio App - Making your routine easier and healthier</h1>
+					<a class="logo" href="#homePage">
+						<img src="imgs/logo.svg" alt="Cardio App Logo" />
+					</a>
 
-            const sleep = time => new Promise(resolve => setTimeout(resolve, time));
+					<a id="hambNav" href="#">
+						<img src="imgs/hamb_nav.png" alt="hambuguer navigation" />
+					</a>
+				</div>
+			</div>
+			
+			<nav id="navDrop">
+				<ul>
+					<li><a href="#homePage">Dashboard</a></li>
+					<li><a href="#homePage">History</a></li>
+					<li><a href="#homePage">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+		<!-- //header -->
 
-            const handleAction = async () => {
-            const recorder = await recordAudio();
-            const actionButton = document.getElementById('action');
-            actionButton.disabled = true;
-            recorder.start();
-            await sleep(20000);
-            const audio = await recorder.stop();
-            await sleep(3000);
-            audio.play();
-            actionButton.disabled = false;
-            }
-            function decodedDone(decoded) {
-                var decodedArray = new Float32Array(decoded.length);
-                decodedArray = decoded.getChannelData(0);
-                
-                console.log(decodedArray.length);
-                bpm = get_bpm(decodedArray);
-                console.log(bpm);
-            }
+		<section role="main" class="ui-content" id="instructions"> 
+			<div class="container">
+				<img src="imgs/listening_icon.svg" alt="Right position for the device" />
+				<div class="instruct">
+					<p>Set and position the devices according to the picture</p>
+				</div>
+				<a id="startRecord" class="btn" href="#checkingPage">Ready</a>
+			</div>
+		</section>
+		<!-- //section instructions -->
+	</div><!-- //instructions page -->
 
-            function get_bpm(decodedArray) {
-                var data = nj.zeros([decodedArray.length, 2]);
-                for (i = 0; i < decodedArray.length; i++) {
-                    decodedArray[i] = Math.abs(decodedArray[i]);
-                    data.set(i, 0, decodedArray[i]);
-                    data.set(i, 1, 0);
-                }
-                fft = nj.abs(nj.fft(data));
-                // zero the DC bin in real and imaginary
-                fft.set(0, 0, 0);
-                fft.set(0, 1, 0);
-                fft_len = fft.shape[0];
+	<div data-role="page" id="checkingPage">
+		<header data-role="header" data-position="fixed">
+			<div id="header">
+				<div class="container">
+					<h1>Cardio App - Making your routine easier and healthier</h1>
+					<a class="logo" href="#homePage">
+						<img src="imgs/logo.svg" alt="Cardio App Logo" />
+					</a>
 
-                // compute upper limit for plotting/peak-finding
-                rate = 44100;       // Hz (figure out how to get this automatically
-                upper_limit = 5;    // Hz (corresponding to 300 bpm)
-                delta_f = (rate / 2) / fft_len;
-                len_limit = Math.round(upper_limit / delta_f);
+					<a id="hambNav" href="#">
+						<img src="imgs/hamb_nav.png" alt="hambuguer navigation" />
+					</a>
+				</div>
+			</div>
+			
+			<nav id="navDrop">
+				<ul>
+					<li><a href="#homePage">Dashboard</a></li>
+					<li><a href="#homePage">History</a></li>
+					<li><a href="#homePage">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+		<!-- //header -->
 
-                fft = fft.reshape(fft.shape[0] * fft.shape[1], 1).flatten().tolist().slice(0, len_limit);
-                var x = nj.arange(fft_len).tolist();
-                var f = nj.arange(len_limit);
-                for (i = 0; i < len_limit; i++) {
-                    f.set(i, f.get(i) * delta_f);
-                }
-                f = f.tolist();
+		<section role="main" class="ui-content" id="checking"> 
+			<div class="container">
+				<img src="imgs/listening_icon.svg" alt="Right position for the device" />
+				<div class="instruct">
+					<p class="listen">Listening<span id="dots">...</span></p>
+					<p>Please, hold the device near to your heart for <span>15 seconds</span></p>
+				</div>
 
-                // plotting
-                input = document.getElementById('input');
-                Plotly.plot(input,
-                            [{ x: x,
-                                y: decodedArray}],
-                            { margin: { t: 0 } });
-                output = document.getElementById('output');
-                Plotly.plot(output,
-                            [{ x: f,
-                                y: fft}],
-                            { margin: { t: 0 } });
+				<div id="bubble">
+					<p id="count">10<span>seconds</span></p>
+				</div>
+			</div>
+		</section>
+		<!-- //section checking -->
+	</div><!-- //page checking -->
 
-                // get bpm
-                freq = f[argMax(fft)];
-                console.log(freq);
-                bpm = Math.round(freq * 60);
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<!-- JQuery Library -->
 
-                return bpm;
-            }
-
-            function argMax(array) {
-                return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
-            }
-        </script>
-    </body>
+	<script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="js/hambnav.js"></script>
+	<script src="js/countdown.js"></script>
+</body>
 </html>
