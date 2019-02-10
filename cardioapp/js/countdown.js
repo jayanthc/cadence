@@ -1,5 +1,5 @@
 const count = document.getElementById('count');
-let sec = 20;
+let sec = 10;
 
 function interval() {
 	sec = sec-1;
@@ -100,24 +100,22 @@ function get_bpm(decodedArray) {
     len_limit = Math.round(upper_limit / delta_f);
 
     fft = fft.reshape(fft.shape[0] * fft.shape[1], 1).flatten().tolist().slice(0, len_limit);
+    for (i = 0; i < len_limit; i++) {
+        if (i < 30) {
+            filt = Math.exp(-30 / 60);
+        }
+        else {
+            filt = Math.exp(-i / 60);
+        }
+        fft[i] *= filt;
+    }
+
     var x = nj.arange(fft_len).tolist();
     var f = nj.arange(len_limit);
     for (i = 0; i < len_limit; i++) {
         f.set(i, f.get(i) * delta_f);
     }
     f = f.tolist();
-
-    // plotting
-    input = document.getElementById('input');
-    Plotly.plot(input,
-                [{ x: x,
-                    y: decodedArray}],
-                { margin: { t: 0 } });
-    output = document.getElementById('output');
-    Plotly.plot(output,
-                [{ x: f,
-                    y: fft}],
-                { margin: { t: 0 } });
 
     // get bpm
     freq = f[argMax(fft)];
