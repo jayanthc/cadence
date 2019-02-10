@@ -2,7 +2,7 @@ const count = document.getElementById('count');
 let sec = 10;
 
 function interval() {
-	sec = sec-1;
+    sec = sec-1;
 	count.innerHTML = sec+'<span>seconds</span>';
 }
 
@@ -58,10 +58,11 @@ const handleAction = async () => {
     const recorder = await recordAudio();
     recorder.start();
     countdown();
-    await sleep(5000);
+    await sleep(10000);
     const audio = await recorder.stop();
-    await sleep(3000);
-    audio.play();
+    document.querySelector('.listen').innerText = 'Processing';
+    await sleep(2000);
+    document.querySelector('.logo').click();
 }
 //attach handleAction to startRecord Button;
 (function(){
