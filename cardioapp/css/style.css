@@ -1,0 +1,277 @@
+/*general style*/
+*{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	box-sizing: border-box;
+	text-decoration: none;
+	font-family: 'Barlow', sans-serif;
+	font-weight: 400 !important;
+	font-size: 18px;
+}
+
+html {
+	min-height: 100%;
+	position: relative;
+	margin: 0 auto;
+}
+
+body {
+	padding-bottom: 100px;
+}
+
+.container {
+	width: 100%;
+	max-width: 425px;
+	margin: auto;
+	position: relative;
+}
+
+.btn {
+	padding: 8px 50px;
+	background-color: #007668;
+	border-radius: 7px;
+	text-align: center;
+	color: #fff !important;
+	font-weight: 600;
+	margin: 20px 0;
+	display: inline-block;
+	text-transform: uppercase;
+	font-size: 17px;
+}
+
+.btn:hover {
+	background-color: #00b290;
+}
+
+/*mask*/
+
+/*header style*/
+header #header, footer {
+	background-color: #dfdfdf;
+}
+
+header #header {
+	position: relative;
+}
+
+header .container {
+	height: 80px;
+	position: relative;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+#header {
+	z-index: 99;
+}
+
+header h1 {
+	text-indent: -9999px;
+	position: absolute;
+	font-family: 'Barlow Semi Condensed', sans-serif;
+	font-weight: 600;
+	z-index: -1;
+}
+
+header .logo, header nav, header nav #hambNav {
+	display: inline-block;
+}
+
+header .logo {
+	min-width: 150px;
+	width: 30%;
+}
+
+header #hambNav {
+	text-align: right;
+}
+
+header #hambNav {
+	width: 7%;
+	max-width: 30px;
+}
+
+header img {
+	width: 100%;
+}
+
+header nav {
+	position: absolute;
+	top: -100%;
+	z-index: 3;
+	text-align: center;
+	width: 100%;
+	height: 0;
+	overflow: hidden;
+}
+
+header nav ul {
+	margin-top: 80px;
+	-webkit-box-shadow: 0px 7px 32px -7px rgba(0,0,0,0.60);
+	-moz-box-shadow: 0px 7px 32px -7px rgba(0,0,0,0.60);
+	box-shadow: 0px 7px 32px -7px rgba(0,0,0,0.60);
+}
+
+header nav ul li a {
+	display: inline-block;
+	width: 100%;
+	padding: 20px;
+	color: #5a5959 !important;
+	background-color: #dfdfdf;
+}
+
+header nav ul li a:hover {
+	color: #fff !important;
+	background-color: #007668;
+}
+
+header nav ul li:nth-child(2) {
+	border-top: 1px solid #007668;
+	border-bottom: 1px solid #007668;
+}
+
+header nav:before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	opacity: 0.5;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+/*section style*/
+section {
+	position: relative;
+	text-align: center;
+	margin: 5% 0;
+}
+
+/*section dashboard style*/
+#homePage, #instructionsPage, #checkingPage {
+	min-height: 100% !important;
+}
+
+#dashboard, #instructions, #checking {
+	position: absolute;
+	top: 110px;
+	right: 0;
+	left: 0;
+	margin: auto;
+	max-width: 280px;
+}
+
+#dashboard .beats, #checking #bubble p {
+	font-size: 80px;
+	font-family: 'Barlow Semi Condensed', sans-serif;
+	font-weight: 600;
+	color: #00b290;
+	padding-top: 15px;
+}
+
+#dashboard .bpm {
+	font-size: 25px;
+	color: #848484;
+	margin-top: -15px;
+	margin-left: 5px;
+	letter-spacing: 6px;
+	text-transform: uppercase;
+}
+
+#dashboard .checkTime p {
+	color: #a1a1a1;
+	line-height: 23px;
+}
+
+#dashboard .time span {
+	margin-left: 10px;
+	text-transform: uppercase;
+}
+
+/*section instructions style*/
+#instructions .instruct {
+	padding: 15px 0 5px;
+}
+
+#instructions .instruct p {
+	color: #5a5959;
+	line-height: 25px;
+}
+
+#instructions img, #checking img {
+	height: 180px;
+}
+
+#footerInstructions {
+	display: none;
+}
+
+/*section checking style*/
+#checking .instruct .listen, #checking .instruct #dots {
+	font-size: 35px;
+	font-family: 'Barlow Semi Condensed', sans-serif;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: #007668;
+	margin: 30px 0 15px;
+}
+
+#checking .instruct p {
+	color: #848484;
+	line-height: 25px;
+}
+
+#checking .instruct span, #checking #bubble span {
+	color: #5a5959;
+}
+
+#checking #bubble {
+	position: absolute;
+	top: -10px;
+	right: -40px;
+	border-radius: 100%;
+	border: 1px solid #00b290;
+	height: 100px;
+	width: 100px;
+}
+
+#checking #bubble p {
+	font-size: 40px;
+	display: block;
+	margin-left: -10px;
+	margin-top: -7px;
+}
+
+#checking #bubble span {
+	display: block;
+	font-size: 15px;
+}
+
+/*footer style*/
+footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 20px 0;
+}
+
+footer .container {
+	text-align: center;
+}
+
+footer img {
+	width: 100%;
+}
+
+g {
+	display: none;
+}
+
+#input, div.plot-container, div.svg-container, svg, svg>g, g.subplot, g.plot, g.scatterlayer.mlayer, g.trace.scatter.tracec26e3e, g.line {
+	display: block;
+}
